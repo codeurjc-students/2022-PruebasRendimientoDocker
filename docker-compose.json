@@ -12,16 +12,24 @@
                 "./prometheus.yml:/etc/prometheus/prometheus.yml"
             ]
         },
-        "graphana": {
+        "grafana": {
             "image": "grafana/grafana-oss:8.5.22-ubuntu",
             "container_name": "grafana",
             "restart": "always",
             "ports": [
                 "3000:3000"
             ],
+            "volumes":[
+                "grafana-storage:/var/lib/grafana"
+            ],
             "links": [
                 "prometheus:prometheus"
             ]
+        }
+    },
+    "volumes": {
+        "grafana-storage": {
+            "external": true
         }
     }
 }

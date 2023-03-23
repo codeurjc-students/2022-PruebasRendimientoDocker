@@ -1,5 +1,10 @@
 {
     "version": "3.0",
+    "volumes": {
+        "grafana-storage": {
+            "external": true
+        }
+    },
     "services": {
         "prometheus": {
             "image": "prom/prometheus:v2.43.0",
@@ -8,9 +13,34 @@
             "ports": [
                 "9090:9090"
             ],
+            "command": [
+                "--config.file=/etc/prometheus/prometheus.yml"
+            ],
             "volumes": [
                 "./prometheus.yml:/etc/prometheus/prometheus.yml"
+            ],
+            "depends_on": [
+                "cadvisor"
             ]
+        },
+        "cadvisor": {
+            "image": "gcr.io/cadvisor/cadvisor:v0.47.0",
+            "container_name": "cadvisor",
+            "restart": "always",
+            "ports": [
+                "8080:8080"
+            ],
+            "volumes": [
+                "/:/rootfs:ro",
+                "/var/run:/var/run:rw",
+                "/sys:/sys:ro",
+                "/var/lib/docker/:/var/lib/docker:ro",
+                "/dev/disk/:/dev/disk:ro"
+            ],
+            "devices": [
+                "/dev/kmsg"
+            ],
+            "privileged": true
         },
         "grafana": {
             "image": "grafana/grafana-oss:8.5.22-ubuntu",
@@ -25,11 +55,6 @@
             "links": [
                 "prometheus:prometheus"
             ]
-        }
-    },
-    "volumes": {
-        "grafana-storage": {
-            "external": true
         }
     }
 }

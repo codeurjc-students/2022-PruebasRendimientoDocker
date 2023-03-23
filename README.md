@@ -18,3 +18,11 @@ docker compose -f docker-compose.json up -d
 3. Go to Configuration > Data sources > Add data source
 4. Pick Prometheus as data type
 5. Save the URL as `http://prometheus:9090` and save the data source
+
+## References
+
+### Integration of cAdvisor with Prometheus
+
+- [Configuration used for cAdvisor in docker-compose](https://github.com/google/cadvisor#quick-start-running-cadvisor-in-a-docker-container)
+- [How to monitor docker containers with Prometheus](https://prometheus.io/docs/guides/cadvisor/#monitoring-docker-container-metrics-using-cadvisor)
+- [cAdvisor metrics for Prometheus](https://github.com/google/cadvisor/blob/master/docs/storage/prometheus.md)

@@ -50,7 +50,8 @@
                 "3000:3000"
             ],
             "volumes":[
-                "grafana-storage:/var/lib/grafana"
+                "grafana-storage:/var/lib/grafana",
+                "./grafana/provisioning/:/etc/grafana/provisioning/"
             ],
             "links": [
                 "prometheus:prometheus"

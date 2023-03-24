@@ -26,3 +26,8 @@ docker compose -f docker-compose.json up -d
 - [Configuration used for cAdvisor in docker-compose](https://github.com/google/cadvisor#quick-start-running-cadvisor-in-a-docker-container)
 - [How to monitor docker containers with Prometheus](https://prometheus.io/docs/guides/cadvisor/#monitoring-docker-container-metrics-using-cadvisor)
 - [cAdvisor metrics for Prometheus](https://github.com/google/cadvisor/blob/master/docs/storage/prometheus.md)
+
+### Grafana
+
+- [Provisioning Data Sources](https://grafana.com/docs/grafana/latest/administration/provisioning/#data-sources)
+- [Create provisioning for Prometheus](https://grafana.com/docs/grafana/latest/datasources/prometheus/#provision-the-data-source)

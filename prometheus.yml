@@ -1,5 +1,5 @@
 global:
-  scrape_interval: 30s 
+  scrape_interval: 15s
 
 scrape_configs:
 
@@ -7,9 +7,12 @@ scrape_configs:
     honor_labels: true
     static_configs:
       - targets: ["prometheus:9090"]
+        labels:
+          alias: 'prometheus'
 
   - job_name: "cadvisor"
     honor_labels: true
-    scrape_interval: 5s
     static_configs:
       - targets: ["cadvisor:8080"]
+        labels:
+          alias: 'cadvisor'

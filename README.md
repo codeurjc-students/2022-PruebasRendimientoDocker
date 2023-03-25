@@ -1,7 +1,12 @@
 ## Pre-requisites
 
-1. Install Docker (All test made with version 20.10.23)
-2. Create a docker volume for grafana called grafana-storage
+1. Install Docker (Tested on version 20.10.23)
+2. Install Docker Compose (Tested on version 2.16.0)
+3. Create a docker `Volume` for grafana called `grafana-storage`
+
+```bash
+docker volume create grafana-storage
+```
 
 ## How to run
 
@@ -13,11 +18,17 @@ docker compose -f docker-compose.json up -d
 
 ### Link grafana with prometheus
 
+For grafana to be able to query prometheus, you need to create a data source in grafana. There are two ways to do this:
+
+#### Using the UI
 1. Run the docker-compose file
 2. Open the browser and go to `localhost:3000` and login with the default username and password `admin:admin`
 3. Go to Configuration > Data sources > Add data source
 4. Pick Prometheus as data type
 5. Save the URL as `http://prometheus:9090` and save the data source
+
+#### Using the provisioning file
+Alternatively, you can create a provisioning file for grafana to automatically create the data source. See the directory `grafana/provisioning/datasources` for an example. For more information, see the references section.
 
 ## References
 

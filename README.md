@@ -13,7 +13,7 @@ docker volume create grafana-storage
 ### Run the docker-compose file
 
 ```bash
-docker compose -f docker-compose.json up -d
+docker compose up -d
 ```
 
 ### Link grafana with prometheus

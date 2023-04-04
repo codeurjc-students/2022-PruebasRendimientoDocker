@@ -42,3 +42,5 @@ Alternatively, you can create a provisioning file for grafana to automatically c
 
 - [Provisioning Data Sources](https://grafana.com/docs/grafana/latest/administration/provisioning/#data-sources)
 - [Create provisioning for Prometheus](https://grafana.com/docs/grafana/latest/datasources/prometheus/#provision-the-data-source)
+- [Create variables in grafana](https://grafana.com/docs/grafana/latest/dashboards/variables/add-template-variables/)
+- [Create Prometheus template variables](https://grafana.com/docs/grafana/latest/datasources/prometheus/template-variables/)

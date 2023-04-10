@@ -32,6 +32,12 @@ Alternatively, you can create a provisioning file for grafana to automatically c
 
 ## References
 
+### cAdvisor
+
+#### cAdvisor fixes
+
+- [Failed to get system UUID](https://github.com/google/cadvisor/issues/2157)
+
 ### Integration of cAdvisor with Prometheus
 
 - [Configuration used for cAdvisor in docker-compose](https://github.com/google/cadvisor#quick-start-running-cadvisor-in-a-docker-container)

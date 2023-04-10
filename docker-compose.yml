@@ -26,6 +26,7 @@ services:
       - '/var/run:/var/run:rw'
       - '/sys:/sys:ro'
       - '/var/lib/docker/:/var/lib/docker:ro'
+      - '/etc/machine-id:/etc/machine-id:ro'
       - '/dev/disk/:/dev/disk:ro'
     devices:
       - /dev/kmsg

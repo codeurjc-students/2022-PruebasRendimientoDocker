@@ -15,6 +15,15 @@ services:
       - './prometheus.yml:/etc/prometheus/prometheus.yml'
     depends_on:
       - cadvisor
+      - pushgateway
+
+  pushgateway:
+    image: 'prom/pushgateway:v1.5.1'
+    container_name: pushgateway
+    restart: always
+    ports:
+      - '9091:9091'
+
   cadvisor:
     image: 'gcr.io/cadvisor/cadvisor:v0.47.0'
     container_name: cadvisor

@@ -23,3 +23,10 @@ scrape_configs:
       - targets: ["grafana:3000"]
         labels:
           alias: 'grafana'
+  
+  - job_name: "pushgateway"
+    honor_labels: true
+    static_configs:
+      - targets: ["pushgateway:9091"]
+        labels:
+          alias: 'pushgateway'

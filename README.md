@@ -5,10 +5,10 @@
 1. Install Docker (Tested on version 20.10.23)
 2. Install Docker Compose (Tested on version 2.16.0)
 3. Create a docker `Volume` for grafana called `grafana-storage`
-
-```bash
-docker volume create grafana-storage
-```
+ 
+    ```bash
+    docker volume create grafana-storage
+    ```
 
 ## How to run
 
@@ -32,6 +32,48 @@ For grafana to be able to query prometheus, you need to create a data source in 
 #### Using the provisioning file
 Alternatively, you can create a provisioning file for grafana to automatically create the data source. See the directory `grafana/provisioning/datasources` for an example. For more information, see the references section.
 
+### Run artillery tests
+
+The `artillery` directory contains all the Artillery tests.
+
+There are two ways to run the tests:
+
+#### Using the Artillery CLI
+
+1. Ensure that you have Artillery installed (last tested with version  2.0.0-31)
+
+    ```bash
+    npm install -g artillery@latest
+    ```
+2. To run a specific test, execute the following command:
+
+    ```bash
+    artillery run <test-script>
+    ```
+    Replace `<test-script>` with the name of the Artillery test script you want to run.
+
+#### Using Docker
+
+- To run the tests using Docker, execute the following command:
+
+    ```bash
+    docker run --rm -it \
+        --volume ${PWD}:/scripts \
+        --network host \
+        artilleryio/artillery:2.0.0-31 \
+        run /scripts/test_script.yml
+    ```
+
+    Replace `<test-script>` with the name of the Artillery test script you want to run.
+
+- Alternatively, you can use the shell script `run-artillery` to run the tests:
+
+    ```bash
+    ./run-artillery <test-script>
+    ```
+
+    Replace `<test-script>` with the name of the Artillery test script you want to run.
+
 ## References
 
 ### cAdvisor
@@ -52,3 +94,12 @@ Alternatively, you can create a provisioning file for grafana to automatically c
 - [Create provisioning for Prometheus](https://grafana.com/docs/grafana/latest/datasources/prometheus/#provision-the-data-source)
 - [Create variables in grafana](https://grafana.com/docs/grafana/latest/dashboards/variables/add-template-variables/)
 - [Create Prometheus template variables](https://grafana.com/docs/grafana/latest/datasources/prometheus/template-variables/)
+
+### Artillery
+- [Install Artillery](https://www.artillery.io/docs/guides/getting-started/installing-artillery)
+- [Run Artillery with Docker](https://www.artillery.io/docs/guides/guides/docker)
+
+### Pushing Artillery metrics to Prometheus
+- [Pushing metrics to Prometheus](https://prometheus.io/docs/instrumenting/pushing/#pushing-metrics)
+- [Pushgateway Repository](https://github.com/prometheus/pushgateway)
+- [Artillery Pushgateway Plugin](https://prometheus.io/docs/instrumenting/pushing/#pushing-metrics)

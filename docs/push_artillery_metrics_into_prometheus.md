@@ -20,16 +20,16 @@ To start, we will create a Docker Compose file that launches Prometheus. We will
 
 ```yaml
 services:
-    prometheus:
-        image: prom/prometheus
-        container_name: prometheus
-        restart: always
-        ports:
-            - '9090:9090'
-        command:
-            - '--config.file=/etc/prometheus/prometheus.yml'
-        volumes:
-            - './prometheus.yml:/etc/prometheus/prometheus.yml'
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    restart: always
+    ports:
+      - '9090:9090'
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    volumes:
+      - './prometheus.yml:/etc/prometheus/prometheus.yml'
 ```
 
 > **Note**: The above Docker Compose file needs a file called `prometheus.yml` you can create an empty file with that name for now.
@@ -96,11 +96,11 @@ Next, we need to modify our `docker-compose.yml` file to include the Pushgateway
 
 ```yaml
 pushgateway:
-    image: 'prom/pushgateway'
-    container_name: pushgateway
-    restart: always
-    ports:
-      - '9091:9091'
+  image: 'prom/pushgateway'
+  container_name: pushgateway
+  restart: always
+  ports:
+    - '9091:9091'
 ```
 
 ### 4: Add Pushgateway to Prometheus Targets

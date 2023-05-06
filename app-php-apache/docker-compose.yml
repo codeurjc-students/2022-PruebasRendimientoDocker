@@ -11,7 +11,7 @@ services:
     ports: 
       - "8080:80"
     volumes:
-      - ./app:/var/www
+      - .:/var/www
   postgres:
     image: postgres:15.2
     container_name: postgres

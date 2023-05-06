@@ -33,9 +33,6 @@ RUN apt-get install --yes libicu-dev \
 RUN apt-get install --yes libpq-dev \
     && docker-php-ext-install pdo_pgsql
 
-RUN bash -c 'echo -e hola $USER_ID'
-RUN bash -c 'echo -e hola $GROUP_ID' 
-
 ## Add user and group
 RUN addgroup --gid $GROUP_ID user
 RUN adduser --disabled-password --gecos '' --uid $USER_ID --gid $GROUP_ID user

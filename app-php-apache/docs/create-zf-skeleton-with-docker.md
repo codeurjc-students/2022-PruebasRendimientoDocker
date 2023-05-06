@@ -69,7 +69,7 @@ php composer.phar create-project -n -sdev zendframework/skeleton-application app
 To make it easier to work with the files, move all the files to the current folder and remove the app folder.
 
 ```shell
-mv -f app/{.,}* . && rmdir app
+mv -n app/{.,}* . && rmdir app
 ```
 
 ## Conclusion

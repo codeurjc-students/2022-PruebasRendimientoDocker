@@ -1,0 +1,25 @@
+services:
+  app:
+    build: 
+      context: .
+      args:
+        USER_ID: ${UID}
+        GROUP_ID: ${GID}
+    container_name: app-php
+    depends_on:
+      - postgres
+    ports: 
+      - "8080:80"
+    volumes:
+      - ./app:/var/www
+  postgres:
+    image: postgres:15.2
+    container_name: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    
+  

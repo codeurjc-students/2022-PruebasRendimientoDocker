@@ -105,5 +105,6 @@ After making changes to one of the above-mentioned `.dist` configuration files y
 
 ## References
 
+- [how to avoid permission errors](https://vsupalov.com/docker-shared-permissions/)
 - [laminas-skeleton repository](https://github.com/laminas/laminas-mvc-skeleton#readme)
 - [docker exec documentation](https://docs.docker.com/engine/reference/commandline/exec/)

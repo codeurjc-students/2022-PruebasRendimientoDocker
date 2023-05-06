@@ -17,13 +17,59 @@ GID=...
 
 Add your user and group id to the `UID` and `GID` variables respectively (you can use `id -u` to get your user id and `id -g` to get your group id).
 
+## First Steps
+
+After cloning the repository, you need to install the dependencies. For this you have two options:
+
+### Install Dependencies With PHP on Your System
+
+```shell
+php composer.phar install
+```
+
+### Install Dependencies With PHP on Docker
+
+1. Start docker-compose
+
+    ```shell
+    docker compose up -d
+    ```
+
+2. Access the container
+
+    ```shell
+    docker exec -it -u user:user app-php bash
+    ```
+
+3. Install dependencies
+
+    ```shell
+    php composer.phar install
+    ```
+
 ## Development
 
-### Run Docker Compose
+### Run The Application
+
+For this use docker-compose:
 
 ```shell
 docker compose up -d
 ```
+
+After this, you can access the application on `http://localhost:8080`
+
+### Install or Update Dependendencies
+
+```shell
+# install dependencies based in composer.lock
+php composer.phar install
+
+# Or
+
+# update dependencies based in composer.json
+php composer.phar update  
+``` 
 
 ### Make Changes to the Dockerfile
 
@@ -33,7 +79,7 @@ If you make any changes to the Dockerfile, you need to rebuild the image. To do 
 docker compose up -d --build
 ```
 
-### Access to Container
+### Access the Container
 
 To access the container, use the following command:
 

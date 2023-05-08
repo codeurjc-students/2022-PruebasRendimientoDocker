@@ -1,3 +1,7 @@
+volumes:
+  postgres_data:
+    external: true
+
 services:
   app:
     build: 

@@ -7,3 +7,7 @@ edition = "2021"
 
 [dependencies]
 clap = { version = "4.2.7", features = ["derive"] }
+glob = { version = "0.3.1" }
+rand = { version = "0.8.5" }
+csv = { version = "1.2.1" }
+serde = { version = "1.0.163", features = ["derive"] }

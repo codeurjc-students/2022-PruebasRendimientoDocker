@@ -14,7 +14,35 @@ All the commands are strongly attached to the directory structure of the reposit
 
 - Have a postgres database running.
 
+## Development
+
+Run the cli tool with the following command:
+
+```shell
+cargo run --
+```
+
+After the `--` you can pass the arguments to the cli tool. For example:
+
+```shell
+cargo run -- --help
+```
+
+## Release
+
+To build the release version of the cli tool, run the following command:
+
+```shell
+cargo build --release
+```
+
 ## More information
 
 <!-- TODO: Link the postres initialization documentation here -->
 An actual use case explanation of this tool can be found in the app-php-apache project [here]().
+
+
+## References
+
+- [Random value from enum](https://stackoverflow.com/a/48491021)
+- [OsString in Rust](https://doc.rust-lang.org/std/ffi/struct.OsString.html)

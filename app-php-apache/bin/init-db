@@ -1,0 +1,33 @@
+#!/bin/bash
+
+SCRIPTS_PATH=../scripts
+LOCAL_CREATE_TABLE_SCRIPT=$SCRIPTS_PATH/create-table.sql
+LOCAL_LOAD_DATA_SCRIPT=$SCRIPTS_PATH/load-data.sql
+LOCAL_DATA_CSV=$SCRIPTS_PATH/data.csv
+
+CONTAINER_NAME=postgres
+
+CONTAINER_PATH=/var/lib/postgresql/data/pgdata
+CONTAINER_CREATE_TABLE_SCRIPT=$CONTAINER_PATH/create-table.sql
+CONTAINER_LOAD_DATA_SCRIPT=$CONTAINER_PATH/load-data.sql
+CONTAINER_DATA_CSV=$CONTAINER_PATH/data.csv
+
+source ../.env
+
+if [ "$(docker ps -q -f name=$CONTAINER_NAME)" ]; then
+    docker cp $LOCAL_CREATE_TABLE_SCRIPT $CONTAINER_NAME:$CONTAINER_PATH
+    docker cp $LOCAL_LOAD_DATA_SCRIPT $CONTAINER_NAME:$CONTAINER_PATH
+    docker cp $LOCAL_DATA_CSV $CONTAINER_NAME:$CONTAINER_PATH
+
+    docker exec -it $CONTAINER_NAME \
+        psql -U $POSTGRES_USER \
+        -d $POSTGRES_DB \
+        -f $CONTAINER_CREATE_TABLE_SCRIPT
+
+    docker exec -it $CONTAINER_NAME \
+        psql -U $POSTGRES_USER \
+        -d $POSTGRES_DB \
+        -f $CONTAINER_LOAD_DATA_SCRIPT
+else
+    echo "Container $CONTAINER_NAME is not running"
+fi

@@ -6,16 +6,25 @@ This project is a basic application with Apache and PHP made to test apache's me
 
 ## Pre-requisites
 
-Have Docker and Docker Compose installed (Tested on version 20.10.23).
+- Have Docker and Docker Compose installed (Tested on version 20.10.23).
 
-Create .env file with the following variables:
+- Create .env file with the following variables:
 
-```shell
-UID=...
-GID=...
-```
+    ```shell
+    UID=...
+    GID=...
+    POSTGRES_USER=...
+    POSTGRES_PASSWORD=...
+    POSTGRES_DB=...
+    ```
 
-Add your user and group id to the `UID` and `GID` variables respectively (you can use `id -u` to get your user id and `id -g` to get your group id).
+    Add your user and group id to the `UID` and `GID` variables respectively (you can use `id -u` to get your user id and `id -g` to get your group id).
+
+- Create docker volume for postgres data:
+
+    ```shell
+    docker volume create postgres-data
+    ```
 
 ## First Steps
 
@@ -46,6 +55,14 @@ php composer.phar install
     ```shell
     php composer.phar install
     ```
+
+### Load Data into Database
+
+Alternatively, you can initialize the database using the following command:
+
+```shell
+./bin/init-db.sh
+```
 
 ## Development
 
@@ -89,6 +106,20 @@ docker exec -it -u user:user app-php bash
 
 This command will start an interactive shell session (bash) in the container named app-php with the user user:user. The -u option specifies the user and group IDs that the container process should run as.
 
+### Execute psql Commands From Running Container
+
+```shell
+docker exec -it postgres psql -U postgres
+```
+
+Replace `-U postgres` with the user configured for the database.
+
+Alternatively, you can access the container and execute the command from there:
+
+```shell
+docker exec -it postgres bash
+```
+
 ### Laminas Development Mode
 
 This functionality comes with [`laminas-development-mode`](https://github.com/laminas/laminas-development-mode)
@@ -108,3 +139,14 @@ After making changes to one of the above-mentioned `.dist` configuration files y
 - [how to avoid permission errors](https://vsupalov.com/docker-shared-permissions/)
 - [laminas-skeleton repository](https://github.com/laminas/laminas-mvc-skeleton#readme)
 - [docker exec documentation](https://docs.docker.com/engine/reference/commandline/exec/)
+
+### Laminas Service Manager
+-  [Configure service manager](https://docs.laminas.dev/laminas-servicemanager/configuring-the-service-manager/#aliases)
+
+### Database Config
+
+- [laminas-db documentation](https://docs.laminas.dev/tutorials/db-adapter/)
+- [laminas-db adapter documentation](https://docs.laminas.dev/laminas-db/adapter/)
+- [Configure adapter](https://docs.laminas.dev/tutorials/db-adapter/#configuring-the-default-adapter)
+- [Create models in laminas](https://docs.laminas.dev/tutorials/getting-started/database-and-models/)
+- [Store data with postgres](https://github.com/docker-library/docs/blob/master/postgres/README.md#where-to-store-data)

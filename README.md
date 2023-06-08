@@ -79,6 +79,7 @@ There are two ways to run the tests:
 ### Related repositories
 
 - [app-apache-php](https://github.com/MarioRP-01/app-apache-php/tree/main)
+- [clothing-dataset-small-manager](https://github.com/MarioRP-01/clothing-dataset-small-manager)
 
 ### cAdvisor
 

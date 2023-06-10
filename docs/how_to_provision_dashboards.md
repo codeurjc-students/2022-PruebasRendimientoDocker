@@ -84,8 +84,6 @@ Now, if you go to Grafana, you will see the new dashboard (the JSON file's name 
 
 ![New Dashboard](resources/how_to_provision_dashboards/new-dashboard-provisioned.jpg)
 
-
-
 ### Update a dashboard
 
 Select the Dashboard and make some change in it. This time, when you save, you will see this message:

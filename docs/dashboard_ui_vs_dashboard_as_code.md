@@ -10,7 +10,7 @@ You can find more information in the references section.
 
 The easiest way to create a dashboard is through the user interface (UI). With a few clicks, you can design a dashboard and save it to a file. This method is user-friendly and doesn't require any technical expertise. By leveraging the UI, you can quickly create and save a customized dashboard that suits your needs.
 
-Nevertheless, this method has some drawbacks. Copying and pasting the JSON is inneficient and error-prone. Also, the resulting JSON  is difficult to read and understand, making it hard to identify which changes were made just by examining the JSON.
+Nevertheless, this method has some drawbacks. Copying and pasting the JSON is inefficient and error-prone. Also, the resulting JSON  is difficult to read and understand, making it hard to identify which changes were made just by examining the JSON.
 
 ### Dashboards as Code
 

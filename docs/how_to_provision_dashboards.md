@@ -58,11 +58,11 @@ The current configuration is in the following path: `.grafana/provisioning/dashb
 
 Select the "New Dashboard" option.
 
-<img src="./resources/how_to_provision_dashboards/select-new-dashboard.jpg"  width="400" style="max-width: 400px;">
+<img src="./resources/commons/select-new-dashboard.jpg"  width="400" style="max-width: 400px;">
 
 In this new dashboard, you can add panels, change the title, etc. To save the dashboard. Click on the dashboards's settings.
 
-![Dashboard Settings](resources/how_to_provision_dashboards/dashboard-settings.jpg)
+![Dashboard Settings](resources/commons/dashboard-settings.jpg)
 
 Select JSON Model and copy the JSON in the clipboard.
 

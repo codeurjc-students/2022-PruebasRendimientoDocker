@@ -29,6 +29,10 @@ services:
     restart: always
     ports:
       - '8080:8080'
+    command:
+      - '--logtostderr=true'
+      - '--docker_only=true'
+      - '--enable_metrics=cpu,memory,network'
     volumes:
       - '/:/rootfs:ro'
       - '/var/run:/var/run:rw'

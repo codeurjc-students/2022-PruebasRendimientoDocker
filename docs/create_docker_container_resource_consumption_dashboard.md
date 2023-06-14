@@ -119,7 +119,7 @@ It's possible to identify the following sections:
 
 ### Memory Row
 
-### Hits Memory Maximum Usage
+#### Hits Memory Maximum Usage
 
 - **title**: *Hits Memory Maximum Usage*
 - **visualization**: *Gauge*
@@ -129,7 +129,7 @@ It's possible to identify the following sections:
     container_memory_failcnt{name=~"$container_name", instance="$instance"}
     ```
 
-### Max Memory Usage
+#### Max Memory Usage
 
 - **title**: *Max Memory Usage*
 - **visualization**: *Gauge*
@@ -139,7 +139,7 @@ It's possible to identify the following sections:
     container_memory_max_usage_bytes{name=~"$container_name", instance="$instance"}
     ```
 
-### Memory Usage
+#### Memory Usage
 
 - **title**: *Memory Usage*
 - **visualization**: *Time series*
@@ -149,9 +149,9 @@ It's possible to identify the following sections:
     container_memory_usage_bytes{name=~"$container_name", instance="$instance"}
     ```
 
-### Network Row
+#### Network Row
 
-### Received Bytes
+#### Received Bytes
 
 - **title**: *Received Bytes*
 - **visualization**: *Time series*
@@ -187,9 +187,107 @@ It's possible to identify the following sections:
 - **visualization**: *Time series*
 - **query**:
 
-```promql
-irate(container_network_transmit_errors_total{name=~"$container_name", instance="$instance"}[$__rate_interval])
-```
+    ```promql
+    irate(container_network_transmit_errors_total{name=~"$container_name", instance="$instance"}[$__rate_interval])
+    ```
+
+## Artillery Metrics
+
+Artillery metrics are obtainer through the prometheus's pushgateway because artillery is an application with a short life cycle which may not be available when prometheus scrapes the metrics. 
+This means that it won't be possible to get the values until the artillery test has sent the metrics to the pushgateway. Besides, when the artillery test finishes, the last values will be kept in the pushgateway until the next artillery test is executed.
+
+Artillery metrics are grouped in the pushgateway with the following names:
+
+- `artillery_counters`:
+- `artillery_summaries`
+- `artillery_rates`
+
+Each of these groups contains multiple metrics in the label `metric`.
+
+### Artillery Variables
+
+Create the followings variables with based on the steps described previously:
+
+#### Test Id
+
+- **name**: *test_id*
+- **label**: *test_id*
+- **query**: 
+    ```promql
+    label_values(artillery_counters, testId)
+    ```
+- **refresh**: *On time range change*
+
+### Artillery Counters
+
+- **name**: *artillery_metric_counters*
+- **label**: *artillery_metric_counters*
+- **query**:
+    ```promql
+    label_values(artillery_counters{testId="$test_id"}, metric)
+    ```
+- **refresh**: *On time range change*
+- **multi-value**: *true*
+
+### Artillery Summaries
+
+- **name**: *artillery_metric_summaries*
+- **label**: *artillery_metric_summaries*
+- **query**:
+    ```promql
+    label_values(artillery_summaries{testId="$test_id"}, metric)
+    ```
+- **refresh**: *On time range change*
+- **multi-value**: *true*
+
+### Artillery Rates
+
+- **name**: *artillery_metric_rates*
+- **label**: *artillery_metric_rates*
+- **query**:
+    ```promql
+    label_values(artillery_rates{testId="$test_id"}, metric)
+    ```
+- **refresh**: *On time range change*
+- **multi-value**: *true*
+
+#### Artillery Panels
+
+Create the following panels based on the steps described previously:
+
+#### Artillery Counters Metric
+
+#### Counters
+
+- **title**: *Artillery Counters*
+- **repeat by variable**: *artillery_counters_metric*
+- **visualization**: *Time series*
+- **query**:
+    ```promql
+    artillery_counters{testId="$test_id", metric=~"$artillery_metric_counters"}
+    ```
+
+#### Summaries
+
+- **title**: *Artillery Summaries*
+- **repeat by variable**: *artillery_summaries_metric*
+- **visualization**: *Time series*
+- **query**:
+
+    ```promql
+    artillery_summaries{testId="$test_id", metric=~"$artillery_metric_summaries"}
+    ```
+
+#### Rates
+
+- **title**: *Artillery Rates*
+- **repeat by variable**: *artillery_rates_metric*
+- **visualization**: *Time series*
+- **query**:
+
+    ```promql
+    artillery_rates{testId="$test_id", metric=~"$artillery_metric_summaries"}
+    ```
 
 ## References
 
@@ -198,3 +296,5 @@ irate(container_network_transmit_errors_total{name=~"$container_name", instance=
 - [visualization in grafana](https://grafana.com/docs/grafana/latest/panels/visualizations/)
 
 - [grafana panel options](https://grafana.com/docs/grafana/latest/panels/)
+
+- [artillery metrics](https://www.artillery.io/docs/guides/plugins/plugin-publish-metrics#prometheus-pushgateway)

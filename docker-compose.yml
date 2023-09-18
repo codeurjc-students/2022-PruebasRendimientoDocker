@@ -1,6 +1,7 @@
 volumes:
   grafana-storage:
     external: true
+
 services:
   prometheus:
     image: 'prom/prometheus:v2.43.0'
@@ -43,6 +44,7 @@ services:
     devices:
       - /dev/kmsg
     privileged: true
+
   grafana:
     image: 'grafana/grafana-oss:9.4.7-ubuntu'
     container_name: grafana

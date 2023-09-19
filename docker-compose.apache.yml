@@ -1,0 +1,101 @@
+volumes:
+  grafana-storage:
+    external: true
+  postgres-data:
+    external: true
+services:
+
+  ### APP PHP
+  app_php_apache:
+    image: mariorp01/app-php-apache
+    container_name: app_php_apache
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "8081:80"
+    volumes:
+      - ./resources:/data-nfs
+    depends_on:
+    - postgres
+
+  ### APACHE EXPORTER
+  apache_exporter:
+    image: lusotycoon/apache-exporter
+    container_name: apache_exporter
+    restart: always
+    ports:
+    - '9117:9117/tcp'
+    command:
+      - '--scrape_uri=http://app_php_apache/server-status?auto'
+    depends_on:
+    - app_php_apache
+
+  ### DATABASE
+  postgres:
+    image: postgres:15.2
+    container_name: postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - 'postgres-data:/var/lib/postgresql/data'
+
+  prometheus:
+    image: 'prom/prometheus:v2.43.0'
+    container_name: prometheus
+    restart: always
+    ports:
+      - '9090:9090'
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    volumes:
+      - './prometheus.apache.yml:/etc/prometheus/prometheus.yml'
+    depends_on:
+      - cadvisor
+      - pushgateway
+      - apache_exporter
+
+  pushgateway:
+    image: 'prom/pushgateway:v1.5.1'
+    container_name: pushgateway
+    restart: always
+    ports:
+      - '9091:9091'
+
+  cadvisor:
+    image: 'gcr.io/cadvisor/cadvisor:v0.47.0'
+    container_name: cadvisor
+    restart: always
+    ports:
+      - '8080:8080'
+    command:
+      - '--logtostderr=true'
+      - '--docker_only=true'
+      - '--enable_metrics=cpu,memory,network'
+    volumes:
+      - '/:/rootfs:ro'
+      - '/var/run:/var/run:rw'
+      - '/sys:/sys:ro'
+      - '/var/lib/docker/:/var/lib/docker:ro'
+      - '/etc/machine-id:/etc/machine-id:ro'
+      - '/dev/disk/:/dev/disk:ro'
+    devices:
+      - /dev/kmsg
+    privileged: true
+
+  grafana:
+    image: 'grafana/grafana-oss:9.4.7-ubuntu'
+    container_name: grafana
+    restart: always
+    ports:
+      - '3000:3000'
+    volumes:
+      - 'grafana-storage:/var/lib/grafana'
+      - './grafana/provisioning/:/etc/grafana/provisioning/'

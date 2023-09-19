@@ -1,4 +1,4 @@
-# 2022-PruebasRendimientoDocker
+# 2022-Docker Performance Testing
 
 ## Pre-requisites
 
@@ -6,15 +6,73 @@
 2. Install Docker Compose (Tested on version 2.16.0)
 3. Create a docker `Volume` for grafana called `grafana-storage`
  
-    ```bash
+    ```shell
     docker volume create grafana-storage
+    ```
+
+### Prepare PHP application
+
+If you want to perform the observability tests with the PHP application, you must first prepare the application. To do this, follow the steps below:
+
+1. Create a docker `Volume` for PostgreSQL:
+
+    ```shell
+    docker volume create postgres-data
+    ```
+
+2. Create inside the current directory a directory an `.env` file with the following content:
+
+    ```env
+    UID=1000
+    GID=1000
+    POSTGRES_USER=postgres
+    POSTGRES_PASSWORD=postgres
+    POSTGRES_DB=postgres
+    ```
+
+    Change the values of UID and GID to your user and group IDs. To find out your user and group IDs, run the following commands:
+
+    ```shell
+    id -u # User ID
+    id -g # Group ID
+    ```
+
+3. Run the docker-compose apache file:
+
+    ```shell
+    docker compose -f docker-compose.apache.yml up -d
+    ```
+
+4. Clone the repository [app-apache-php](https://github.com/MarioRP-01/app-apache-php)
+
+    ```shell
+    git clone git@github.com:MarioRP-01/app-apache-php.git # SSH
+    git clone https://github.com/MarioRP-01/app-apache-php.git # HTTPS
+    ```
+
+5. Copy the .env file into the `app-apache-php` directory and change to the `app-apache-php` directory:
+
+    ```shell
+    cp .env app-apache-php/
+    cd app-apache-php
+    ```
+
+6. Follow the instructions of the [set up resources guide](https://github.com/MarioRP-01/app-apache-php/blob/main/docs/set-up-data-storage.md) to dump the information in the volume.
+
+    It's possible to use the `docker-compose.apache.yml` containers instead of the ones in the guide. In the [Postgres](mariorp01/app-php-apache) section, **skip the steps 1 and 2**.
+
+7. Finally, copy the `resources` directory into this directory and remove the `app-apache-php` directory`:
+
+    ```shell
+    cp -r app-apache-php/resources .
+    rm -rf app-apache-php
     ```
 
 ## How to run
 
 ### Run the docker-compose file
 
-```bash
+```shell
 docker compose up -d
 ```
 
@@ -42,12 +100,12 @@ There are two ways to run the tests:
 
 1. Ensure that you have Artillery installed (last tested with version  2.0.0-31)
 
-    ```bash
+    ```shell
     npm install -g artillery@latest
     ```
 2. To run a specific test, execute the following command:
 
-    ```bash
+    ```shell
     artillery run <test-script>
     ```
     Replace `<test-script>` with the name of the Artillery test script you want to run.
@@ -56,7 +114,7 @@ There are two ways to run the tests:
 
 - To run the tests using Docker, execute the following command:
 
-    ```bash
+    ```shell
     docker run --rm -it \
         --volume ${PWD}:/scripts \
         --network host \
@@ -68,7 +126,7 @@ There are two ways to run the tests:
 
 - Alternatively, you can use the shell script `run-artillery` to run the tests:
 
-    ```bash
+    ```shell
     ./run-artillery <test-script>
     ```
 

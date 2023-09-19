@@ -64,7 +64,7 @@ If you want to perform the observability tests with the PHP application, you mus
 7. Finally, copy the `resources` directory into this directory and remove the `app-apache-php` directory`:
 
     ```shell
-    cp -r app-apache-php/resources .
+    cp -r app-apache-php/resources ./apache-resources
     rm -rf app-apache-php
     ```
 

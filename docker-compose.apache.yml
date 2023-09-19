@@ -17,7 +17,7 @@ services:
     ports:
       - "8081:80"
     volumes:
-      - ./resources:/data-nfs
+      - ./apache-resources:/data-nfs
     depends_on:
     - postgres
 

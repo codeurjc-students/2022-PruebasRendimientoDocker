@@ -1,0 +1,63 @@
+config:
+  target: "http://127.0.0.1:8081"
+  phases:
+    - duration: 30
+      arrivalRate: 1
+      rampTo: 5
+      name: "Warm up the API"
+    - pause: 10
+    - duration: 60
+      arrivalRate: 5
+      rampTo: 20
+      name: "Ramp up to peak load"
+    - duration: 120
+      arrivalRate: 20
+      name: "Sustained peak load"
+  plugins:
+    publish-metrics:
+      - type: "prometheus"
+        pushgateway: "http://127.0.0.1:9091"
+        tags:
+          - "testId:apache_test_3"
+          - "type:loadtest"
+  payload:
+    path: "/payloads/data.csv"
+    fields:
+      - "uuid"
+      - "name"
+      - "brand"
+      - "gender"
+      - "price"
+      - "description"
+      - "primary_color"
+      - "label"
+      - "size"
+      - "kids"
+  processor: "/processors/custom-functions.js"
+
+scenarios:
+  - flow:
+    - get:
+        url: "/"
+    - think: 1s
+    - get:
+        url: "/clothings"
+        qs:
+          name: "Raymond"
+    - loop:
+        - think: 2s
+        - get:
+            url: "/api/clothings"
+            qs:
+              name: "Raymond"
+              start: "{{ ($loopCount + 1) * 20 }}"
+              limit: "{{ $loopCount * 20 }}"
+            capture:
+              - json: "$.size"
+                as: "size"
+              - json: "$.limit"
+                as: "limit"
+      whileTrue: "canNextPage"
+    - think: 10s
+    - get:
+        url: "/clothings/6e857a40-68f4-471f-a19d-1b787f1f52bf"

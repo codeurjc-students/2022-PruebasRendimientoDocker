@@ -7,12 +7,15 @@ fi
 
 SCRIPT_NAME=$1
 PROYECT_DIR="$(dirname "$(readlink -f "$0")")"
-SCRIPTS_DIR="${PROYECT_DIR}/artillery"
+ARTILLERY_DIR="${PROYECT_DIR}/artillery"
+SCRIPTS_DIR="${ARTILLERY_DIR}/scripts"
+PAYLOADS_DIR="${ARTILLERY_DIR}/payloads"
 
 echo "Running script: $1"
 
 docker run --rm -it \
-    --volume ${SCRIPTS_DIR}:/scripts \
+    --volume ${SCRIPTS_DIR}:/scripts:ro \
+    --volume ${PAYLOADS_DIR}:/payloads:ro \
     --network host \
     artilleryio/artillery:2.0.0-31 \
     run /scripts/$SCRIPT_NAME

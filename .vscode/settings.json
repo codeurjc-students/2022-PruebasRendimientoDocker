@@ -3,6 +3,9 @@
         "artilleryio",
         "cadvisor",
         "datasources",
-        "pushgateway"
+        "loadtest",
+        "pushgateway",
+        "Vusers",
+        "webui"
     ]
 }

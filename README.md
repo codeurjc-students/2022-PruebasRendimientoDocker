@@ -157,6 +157,7 @@ There are two ways to run the tests:
 - [Create provisioning for Prometheus](https://grafana.com/docs/grafana/latest/datasources/prometheus/#provision-the-data-source)
 - [Create variables in grafana](https://grafana.com/docs/grafana/latest/dashboards/variables/add-template-variables/)
 - [Create Prometheus template variables](https://grafana.com/docs/grafana/latest/datasources/prometheus/template-variables/)
+- [How to Extract Label Values from Prometheus Metrics in Grafana](https://grafana.com/blog/2023/02/23/how-to-extract-label-values-from-prometheus-metrics-in-grafana/)
 
 ### Artillery
 - [Install Artillery](https://www.artillery.io/docs/guides/getting-started/installing-artillery)

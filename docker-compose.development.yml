@@ -1,0 +1,67 @@
+volumes:
+  grafana-storage:
+    external: true
+
+services:
+  prometheus:
+    image: 'prom/prometheus:v2.43.0'
+    container_name: prometheus
+    restart: always
+    ports:
+      - '9090:9090'
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    volumes:
+      - './prometheus.yml:/etc/prometheus/prometheus.yml'
+    depends_on:
+      - cadvisor
+      - pushgateway
+
+  pushgateway:
+    image: 'prom/pushgateway:v1.5.1'
+    container_name: pushgateway
+    restart: always
+    ports:
+      - '9091:9091'
+
+  cadvisor:
+    image: 'gcr.io/cadvisor/cadvisor:v0.47.0'
+    container_name: cadvisor
+    restart: always
+    ports:
+      - '8080:8080'
+    command:
+      - '--logtostderr=true'
+      - '--docker_only=true'
+      - '--enable_metrics=cpu,memory,network'
+    volumes:
+      - '/:/rootfs:ro'
+      - '/var/run:/var/run:rw'
+      - '/sys:/sys:ro'
+      - '/var/lib/docker/:/var/lib/docker:ro'
+      - '/etc/machine-id:/etc/machine-id:ro'
+      - '/dev/disk/:/dev/disk:ro'
+    devices:
+      - /dev/kmsg
+    privileged: true
+
+  grafana:
+    image: 'grafana/grafana-oss:9.4.7-ubuntu'
+    container_name: grafana
+    restart: always
+    ports:
+      - '3000:3000'
+    volumes:
+      - 'grafana-storage:/var/lib/grafana'
+      - './grafana/provisioning/:/etc/grafana/provisioning/'
+
+  grafonnet:
+    build:
+      context: ./grafana
+      args:
+        USER_ID: ${UID}
+        GROUP_ID: ${GID}
+    container_name: grafonnet    
+    restart: always
+    volumes:
+      - ./grafana:/grafana

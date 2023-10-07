@@ -30,3 +30,10 @@ scrape_configs:
       - targets: ["pushgateway:9091"]
         labels:
           alias: 'pushgateway'
+
+  - job_name: "apache_exporter"
+    honor_labels: true
+    static_configs:
+      - targets: ["apache_exporter:9117"]
+        labels:
+          alias: 'apache_exporter'

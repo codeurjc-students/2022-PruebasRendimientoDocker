@@ -40,7 +40,7 @@ If you want to perform the observability tests with the PHP application, you mus
 3. Run the docker-compose apache file:
 
     ```shell
-    docker compose -f docker-compose.apache.yml up -d
+    docker compose -f docker-compose.yml up -d
     ```
 
 4. Clone the repository [app-apache-php](https://github.com/MarioRP-01/app-apache-php)
@@ -59,7 +59,7 @@ If you want to perform the observability tests with the PHP application, you mus
 
 6. Follow the instructions of the [set up resources guide](https://github.com/MarioRP-01/app-apache-php/blob/main/docs/set-up-data-storage.md) to dump the information in the volume.
 
-    It's possible to use the `docker-compose.apache.yml` containers instead of the ones in the guide. In the [Postgres](mariorp01/app-php-apache) section, **skip the steps 1 and 2**.
+    It's possible to use the `docker-compose.yml` containers instead of the ones in the guide. In the [Postgres](mariorp01/app-php-apache) section, **skip the steps 1 and 2**.
 
 7. Finally, copy the `resources` directory into this directory and remove the `app-apache-php` directory`:
 

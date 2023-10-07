@@ -1,4 +1,5 @@
 tutorials
 app-php-apache
 apache-resources
+grafana/dashboards/vendor
 .env

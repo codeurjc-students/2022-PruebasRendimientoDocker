@@ -1,8 +1,52 @@
 volumes:
   grafana-storage:
     external: true
-
+  postgres-data:
+    external: true
 services:
+
+  ### APP PHP
+  app_php_apache:
+    image: mariorp01/app-php-apache
+    container_name: app_php_apache
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "8081:80"
+    volumes:
+      - ./apache-resources:/data-nfs
+    depends_on:
+    - postgres
+
+  ### APACHE EXPORTER
+  apache_exporter:
+    image: lusotycoon/apache-exporter
+    container_name: apache_exporter
+    restart: always
+    ports:
+    - '9117:9117/tcp'
+    command:
+      - '--scrape_uri=http://app_php_apache/server-status?auto'
+    depends_on:
+    - app_php_apache
+
+  ### DATABASE
+  postgres:
+    image: postgres:15.2
+    container_name: postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - 'postgres-data:/var/lib/postgresql/data'
+
   prometheus:
     image: 'prom/prometheus:v2.43.0'
     container_name: prometheus
@@ -16,6 +60,7 @@ services:
     depends_on:
       - cadvisor
       - pushgateway
+      - apache_exporter
 
   pushgateway:
     image: 'prom/pushgateway:v1.5.1'

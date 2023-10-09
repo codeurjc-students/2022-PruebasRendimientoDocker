@@ -27,3 +27,4 @@ You can find more information about options to create dashboards as code in the 
 #### Using Grafonnet
 - [Grafana as code](https://medium.com/@tarantool/grafana-as-code-b642cac9ae75)
 - [Grafonnet repository](https://github.com/grafana/grafonnet-lib)
+- [PromCon EU 2019: Managing Grafana Dashboards with grafonnet and git](https://www.youtube.com/watch?v=kV3Ua6guynI&ab_channel=PrometheusMonitoring)

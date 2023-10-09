@@ -1,4 +1,4 @@
-# How to Create and Mantain Dashboard Through Provisioning
+# How to Create and Maintain Dashboard Through Provisioning
 
 ## Introduction
 

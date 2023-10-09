@@ -3,6 +3,7 @@
         "artilleryio",
         "cadvisor",
         "datasources",
+        "Grafonnet",
         "loadtest",
         "pushgateway",
         "Vusers",

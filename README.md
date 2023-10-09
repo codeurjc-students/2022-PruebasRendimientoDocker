@@ -1,6 +1,45 @@
 # 2022-Docker Performance Testing
 
-## Pre-requisites
+## Table of Contents
+
+- [2022-Docker Performance Testing](#2022-docker-performance-testing)
+  - [Table of Contents](#table-of-contents)
+    - [Related Documentation](#related-documentation)
+  - [Repository Guides](#repository-guides)
+    - [Pre-requisites](#pre-requisites)
+      - [Prepare PHP application](#prepare-php-application)
+  - [How to run](#how-to-run)
+    - [Run the docker-compose file](#run-the-docker-compose-file)
+    - [Link grafana with prometheus](#link-grafana-with-prometheus)
+      - [Using the UI](#using-the-ui)
+      - [Using the provisioning file](#using-the-provisioning-file)
+  - [Run artillery tests](#run-artillery-tests)
+      - [Using the Artillery CLI](#using-the-artillery-cli)
+      - [Using Docker](#using-docker)
+  - [References](#references)
+    - [Related repositories](#related-repositories)
+    - [cAdvisor](#cadvisor)
+      - [cAdvisor fixes](#cadvisor-fixes)
+    - [Integration of cAdvisor with Prometheus](#integration-of-cadvisor-with-prometheus)
+    - [Grafana](#grafana)
+    - [Artillery](#artillery)
+    - [Pushing Artillery metrics to Prometheus](#pushing-artillery-metrics-to-prometheus)
+
+
+### Related Documentation 
+
+- [CPU metrics for Apache applications running in Docker](./docs/cadvisor_cpu_metrics.md)
+- [How to Provision Dashboard in Grafana](./docs/how_to_provision_dashboards.md)
+- [Creating Docker Container Resource Consumption Dashboard](./docs/create_docker_container_resource_consumption_dashboard.md)
+- [Managing Dashboards through UI vs as Code](./docs/dashboard_ui_vs_dashboard_as_code.md)
+- [Pull Docker metrics into Prometheus](./docs/pull_docker_metrics_into_prometheus.md)
+- [Pull Apache metrics into Prometheus](#)
+- [Push Artillery metrics into Prometheus](./docs/push_artillery_metrics_into_prometheus.md)
+- [Testing with Artillery](./docs/testing_with_artillery.md)
+
+## Repository Guides
+
+### Pre-requisites
 
 1. Install Docker (Tested on version 20.10.23)
 2. Install Docker Compose (Tested on version 2.16.0)
@@ -10,9 +49,9 @@
     docker volume create grafana-storage
     ```
 
-### Prepare PHP application
+#### Prepare PHP application
 
-If you want to perform the observability tests with the PHP application, you must first prepare the application. To do this, follow the steps below:
+Follow the steps below to perform the observability tests on the PHP application:
 
 1. Create a docker `Volume` for PostgreSQL:
 
@@ -37,7 +76,7 @@ If you want to perform the observability tests with the PHP application, you mus
     id -g # Group ID
     ```
 
-3. Run the docker-compose apache file:
+3. Run the docker-compose:
 
     ```shell
     docker compose -f docker-compose.yml up -d
@@ -58,8 +97,8 @@ If you want to perform the observability tests with the PHP application, you mus
     ```
 
 6. Follow the instructions of the [set up resources guide](https://github.com/MarioRP-01/app-apache-php/blob/main/docs/set-up-data-storage.md) to dump the information in the volume.
-
-    It's possible to use the `docker-compose.yml` containers instead of the ones in the guide. In the [Postgres](mariorp01/app-php-apache) section, **skip the steps 1 and 2**.
+  
+    It's possible to use the `docker-compose.yml` containers instead of the ones in the guide. **Skip the steps 1 and 2** in the [Postgres](mariorp01/app-php-apache) section.
 
 7. Finally, copy the `resources` directory into this directory and remove the `app-apache-php` directory`:
 
@@ -90,7 +129,7 @@ For grafana to be able to query prometheus, you need to create a data source in 
 #### Using the provisioning file
 Alternatively, you can create a provisioning file for grafana to automatically create the data source. See the directory `grafana/provisioning/datasources` for an example. For more information, see the references section.
 
-### Run artillery tests
+## Run artillery tests
 
 The `artillery` directory contains all the Artillery tests.
 

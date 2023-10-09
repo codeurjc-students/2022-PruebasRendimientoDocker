@@ -21,7 +21,7 @@ config:
           - "testId:apache_test_3"
           - "type:loadtest"
   payload:
-    path: "/payloads/data.csv"
+    path: "./payloads/data.csv"
     fields:
       - "uuid"
       - "name"

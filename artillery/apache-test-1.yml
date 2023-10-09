@@ -21,7 +21,7 @@ config:
           - "testId:apache_test_3"
           - "type:loadtest"
   payload:
-    path: "/payloads/data.csv"
+    path: "./payloads/data.csv"
     fields:
       - "uuid"
       - "name"
@@ -33,7 +33,7 @@ config:
       - "label"
       - "size"
       - "kids"
-  processor: "/processors/custom-functions.js"
+  processor: "./processors/custom-functions.js"
 
 scenarios:
   - flow:

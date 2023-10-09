@@ -14,8 +14,9 @@
       - [Using the UI](#using-the-ui)
       - [Using the provisioning file](#using-the-provisioning-file)
   - [Run artillery tests](#run-artillery-tests)
-      - [Using the Artillery CLI](#using-the-artillery-cli)
-      - [Using Docker](#using-docker)
+    - [Running the test with the Artillery CLI](#running-the-test-with-the-artillery-cli)
+      - [Running the tests with Docker](#running-the-tests-with-docker)
+    - [Available tests](#available-tests)
   - [References](#references)
     - [Related repositories](#related-repositories)
     - [cAdvisor](#cadvisor)
@@ -131,11 +132,11 @@ Alternatively, you can create a provisioning file for grafana to automatically c
 
 ## Run artillery tests
 
-The `artillery` directory contains all the Artillery tests.
+One of the goals of this repository is to be able to observe the changes in the metrics when the application is subjected to different loads. To do this, we use [Artillery](https://artillery.io/), a load testing tool that allows us to simulate different loads on the application.
 
-There are two ways to run the tests:
+The `artillery` directory contains all the Artillery tests and other artifacts used by the tests.
 
-#### Using the Artillery CLI
+### Running the test with the Artillery CLI
 
 1. Ensure that you have Artillery installed (last tested with version  2.0.0-31)
 
@@ -145,20 +146,20 @@ There are two ways to run the tests:
 2. To run a specific test, execute the following command:
 
     ```shell
-    artillery run <test-script>
+    artillery run artillery/<test-script>
     ```
     Replace `<test-script>` with the name of the Artillery test script you want to run.
 
-#### Using Docker
+#### Running the tests with Docker
 
 - To run the tests using Docker, execute the following command:
 
     ```shell
     docker run --rm -it \
-        --volume ${PWD}:/scripts \
+        --volume ${PWD}/artillery:/scripts \
         --network host \
         artilleryio/artillery:2.0.0-31 \
-        run /scripts/test_script.yml
+        run /scripts/<test-script>
     ```
 
     Replace `<test-script>` with the name of the Artillery test script you want to run.
@@ -170,6 +171,72 @@ There are two ways to run the tests:
     ```
 
     Replace `<test-script>` with the name of the Artillery test script you want to run.
+
+### Available tests
+
+- `apache-test-1.yml`: Go to the main page, then ask for pages until there are no more pages to ask for.
+
+    ```shell
+    # Artillery CLI
+    artillery run artillery/apache-test-1.yml
+    ```
+
+    ```shell
+    # Docker
+    docker run --rm -it \
+        --volume ${PWD}/artillery:/scripts \
+        --network host \
+        artilleryio/artillery:2.0.0-31 \
+        run /scripts/apache-test-1.yml
+    ```
+
+    ```shell
+    # Shell script
+    ./run-artillery apache-test-1.yml
+    ```
+
+
+- `apache-test-2.yml`: Go to the main page and then navigate to a new product each two seconds twenty times.
+
+    ```shell
+    # Artillery CLI
+    artillery run artillery/apache-test-2.yml
+    ```
+
+    ```shell
+    # Docker
+    docker run --rm -it \
+        --volume ${PWD}/artillery:/scripts \
+        --network host \
+        artilleryio/artillery:2.0.0-31 \
+        run /scripts/apache-test-2.yml
+    ```
+
+    ```shell
+    # Shell script
+    ./run-artillery apache-test-2.yml
+    ```
+
+- `apache-test-3.yml`: Search for a product and navigate to the first result.
+
+    ```shell
+    # Artillery CLI
+    artillery run artillery/apache-test-3.yml
+    ```
+
+    ```shell
+    # Docker
+    docker run --rm -it \
+        --volume ${PWD}/artillery:/scripts \
+        --network host \
+        artilleryio/artillery:2.0.0-31 \
+        run /scripts/apache-test-3.yml
+    ```
+
+    ```shell
+    # Shell script
+    ./run-artillery apache-test-3.yml
+    ```
 
 ## References
 

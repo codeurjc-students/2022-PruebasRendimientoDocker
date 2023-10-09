@@ -57,7 +57,7 @@ Now, to run it, use this command:
 
 ```shell
 docker run --rm -it \
-    --volume ${PWD}/scripts:/scripts \
+    --volume ${PWD}/artillery:/scripts \
     --network host \
     artilleryio/artillery:latest \
     run /scripts/test-prometheus.yml

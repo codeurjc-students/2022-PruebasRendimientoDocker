@@ -15,7 +15,7 @@
       - [Using the provisioning file](#using-the-provisioning-file)
   - [Run artillery tests](#run-artillery-tests)
     - [Running the test with the Artillery CLI](#running-the-test-with-the-artillery-cli)
-      - [Running the tests with Docker](#running-the-tests-with-docker)
+    - [Running the tests with Docker](#running-the-tests-with-docker)
     - [Available tests](#available-tests)
   - [References](#references)
     - [Related repositories](#related-repositories)
@@ -29,7 +29,7 @@
 
 ### Related Documentation 
 
-- [CPU metrics for Apache applications running in Docker](./docs/cadvisor_cpu_metrics.md)
+- [Metrics for Apache applications running in Docker](./docs/metrics_for_apache_applications_running_in_docker.md)
 - [How to Provision Dashboard in Grafana](./docs/how_to_provision_dashboards.md)
 - [Creating Docker Container Resource Consumption Dashboard](./docs/create_docker_container_resource_consumption_dashboard.md)
 - [Managing Dashboards through UI vs as Code](./docs/dashboard_ui_vs_dashboard_as_code.md)
@@ -150,7 +150,7 @@ The `artillery` directory contains all the Artillery tests and other artifacts u
     ```
     Replace `<test-script>` with the name of the Artillery test script you want to run.
 
-#### Running the tests with Docker
+### Running the tests with Docker
 
 - To run the tests using Docker, execute the following command:
 

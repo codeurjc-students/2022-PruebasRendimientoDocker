@@ -3,9 +3,12 @@
         "artilleryio",
         "cadvisor",
         "datasources",
+        "Grabana",
         "Grafonnet",
+        "Jsonnet",
         "loadtest",
         "pushgateway",
+        "templating",
         "Vusers",
         "webui"
     ]

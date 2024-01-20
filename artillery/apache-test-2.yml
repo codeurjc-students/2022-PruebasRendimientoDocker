@@ -18,7 +18,7 @@ config:
       - type: "prometheus"
         pushgateway: "http://127.0.0.1:9091"
         tags:
-          - "testId:apache_test_3"
+          - "testId:apache_test_2"
           - "type:loadtest"
   payload:
     path: "./payloads/data.csv"

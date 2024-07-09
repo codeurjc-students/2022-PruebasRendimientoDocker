@@ -47,6 +47,7 @@ services:
     volumes:
       - 'postgres-data:/var/lib/postgresql/data'
 
+  # PROMETHEUS
   prometheus:
     image: 'prom/prometheus:v2.43.0'
     container_name: prometheus
@@ -62,6 +63,7 @@ services:
       - pushgateway
       - apache_exporter
 
+  #PUSHGATEWAY
   pushgateway:
     image: 'prom/pushgateway:v1.5.1'
     container_name: pushgateway
@@ -69,6 +71,7 @@ services:
     ports:
       - '9091:9091'
 
+  #CADVISOR
   cadvisor:
     image: 'gcr.io/cadvisor/cadvisor:v0.47.0'
     container_name: cadvisor
@@ -90,6 +93,7 @@ services:
       - /dev/kmsg
     privileged: true
 
+  #GRAFANA
   grafana:
     image: 'grafana/grafana-oss:9.4.7-ubuntu'
     container_name: grafana

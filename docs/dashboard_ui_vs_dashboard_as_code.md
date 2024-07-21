@@ -8,7 +8,7 @@ Creating and managing dashboards is an essential part of Grafana's functionality
 
 One of the easiest ways to create a dashboard in Grafana is through the user interface (UI). With just a few clicks, you can effortlessly create a dashboard tailored to your needs. The UI provides an intuitive and user-friendly experience, making it accessible to users with different levels of technical expertise.
 
-### Version Control in the UI**
+### Version Control in the UI
 
 Grafana takes version control a step further with a built-in version control system. This unique feature allows you to create and save multiple versions of your dashboard right within the interface. You can seamlessly compare these versions and track changes over time.
 

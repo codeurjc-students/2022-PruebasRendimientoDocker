@@ -423,7 +423,7 @@
               }
             ]
           },
-          "unit": "percentunit"
+          "unit": "percent"
         },
         "overrides": []
       },
@@ -681,7 +681,7 @@
       "type": "timeseries"
     }
   ],
-  "refresh": false,
+  "refresh": "",
   "revision": 1,
   "schemaVersion": 38,
   "style": "dark",
@@ -729,6 +729,6 @@
   "timezone": "",
   "title": "Apache Dashboard",
   "uid": "Sn-IhKZSz",
-  "version": 8,
+  "version": 1,
   "weekStart": ""
 }

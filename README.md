@@ -50,6 +50,12 @@
     docker volume create grafana-storage
     ```
 
+4. Create a docker `Volume` for prometheus called `prometheus-data`
+
+    ```shell
+    docker volume create prometheus-data
+    ```
+
 #### Prepare PHP application
 
 Follow the steps below to perform the observability tests on the PHP application:
@@ -101,12 +107,27 @@ Follow the steps below to perform the observability tests on the PHP application
   
     It's possible to use the `docker-compose.yml` containers instead of the ones in the guide. **Skip the steps 1 and 2** in the [Postgres](mariorp01/app-php-apache) section.
 
-7. Finally, copy the `resources` directory into this directory and remove the `app-apache-php` directory`:
+7. Finally, copy the `app-apache-php/resources` directory into `apache-resources` and remove `app-apache-php`:
 
     ```shell
+    cd ..
     cp -r app-apache-php/resources ./apache-resources
+    ```
+
+    In case you can't make the copy operation make sure that you have the proper permissions on the directories.
+
+8. Remove the `app-apache-php` directory.
+
+    ```shell
     rm -rf app-apache-php
     ```
+
+9. Finally, run again all the containers for everything to work:
+
+    ```shell
+    docker compose restart
+    ```
+
 
 ## How to run
 

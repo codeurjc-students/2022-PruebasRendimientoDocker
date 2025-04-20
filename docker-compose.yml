@@ -3,6 +3,8 @@ volumes:
     external: true
   postgres-data:
     external: true
+  prometheus-data:
+    external: true
 services:
 
   ### APP PHP
@@ -58,6 +60,7 @@ services:
       - '--config.file=/etc/prometheus/prometheus.yml'
     volumes:
       - './prometheus.yml:/etc/prometheus/prometheus.yml'
+      - 'prometheus-data:/prometheus'
     depends_on:
       - cadvisor
       - pushgateway

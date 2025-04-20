@@ -45,6 +45,101 @@
         "type": "prometheus",
         "uid": "PBFA97CFB590B2093"
       },
+      "description": "Shows the combined rate of total CPU usage (user + system) for each container. This gives you a real-time view of how much total CPU time a container is consuming, regardless of whether it's user code or kernel activity.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percentunit"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 1
+      },
+      "id": 10,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "sum by (instance, name) (irate(container_cpu_usage_seconds_total{name=~\"$container_name\", instance=~\"$instance\"}[$__rate_interval]))",
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Container Total CPU Rate",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
+      "description": "Shows the recent rate of user-space CPU time used by each container, grouped by instance and container name. This reflects the amount of time spent running application code, measured in seconds of CPU time per second. Useful for understanding how much pure compute work your container is doing.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -102,9 +197,9 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 1
+        "y": 9
       },
-      "id": 10,
+      "id": 26,
       "options": {
         "legend": {
           "calcs": [],
@@ -124,13 +219,13 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "sum by (instance, name) (irate(container_cpu_usage_seconds_total{name=~\"$container_name\", instance=~\"$instance\"}[$__rate_interval]))",
+          "expr": "sum by (instance, name) (irate(container_cpu_user_seconds_total{name=~\"$container_name\", instance=~\"$instance\"}[$__rate_interval]))",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
         }
       ],
-      "title": "% CPU Usage",
+      "title": "Container User CPU Rate",
       "type": "timeseries"
     },
     {
@@ -138,6 +233,7 @@
         "type": "prometheus",
         "uid": "PBFA97CFB590B2093"
       },
+      "description": "Displays the recent rate of system (kernel) CPU time used by each container. This includes tasks like handling I/O, network processing, and other OS-level operations. A spike here can indicate system-level workload or contention inside the container.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -195,7 +291,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 1
+        "y": 9
       },
       "id": 8,
       "options": {
@@ -223,7 +319,7 @@
           "refId": "A"
         }
       ],
-      "title": "% CPU System Usage",
+      "title": "Container System CPU Rate",
       "type": "timeseries"
     },
     {
@@ -232,7 +328,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 9
+        "y": 17
       },
       "id": 4,
       "panels": [],
@@ -270,7 +366,7 @@
         "h": 7,
         "w": 12,
         "x": 0,
-        "y": 10
+        "y": 18
       },
       "id": 14,
       "options": {
@@ -334,7 +430,7 @@
         "h": 7,
         "w": 12,
         "x": 12,
-        "y": 10
+        "y": 18
       },
       "id": 16,
       "options": {
@@ -429,7 +525,7 @@
         "h": 8,
         "w": 24,
         "x": 0,
-        "y": 17
+        "y": 25
       },
       "id": 12,
       "options": {
@@ -466,7 +562,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 25
+        "y": 33
       },
       "id": 6,
       "panels": [],
@@ -535,7 +631,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 26
+        "y": 34
       },
       "id": 18,
       "options": {
@@ -627,7 +723,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 26
+        "y": 34
       },
       "id": 20,
       "options": {
@@ -720,7 +816,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 34
+        "y": 42
       },
       "id": 22,
       "options": {
@@ -812,7 +908,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 34
+        "y": 42
       },
       "id": 24,
       "options": {
@@ -853,13 +949,9 @@
     "list": [
       {
         "current": {
-          "selected": true,
-          "text": [
-            "None"
-          ],
-          "value": [
-            ""
-          ]
+          "selected": false,
+          "text": "apache_exporter",
+          "value": "apache_exporter"
         },
         "datasource": {
           "type": "prometheus",

@@ -32,8 +32,6 @@ services:
     - '9117:9117/tcp'
     command:
       - '--scrape_uri=http://app_php_apache/server-status?auto'
-    depends_on:
-    - app_php_apache
 
   ### DATABASE
   postgres:
@@ -61,10 +59,6 @@ services:
     volumes:
       - './prometheus.yml:/etc/prometheus/prometheus.yml'
       - 'prometheus-data:/prometheus'
-    depends_on:
-      - cadvisor
-      - pushgateway
-      - apache_exporter
 
   #PUSHGATEWAY
   pushgateway:

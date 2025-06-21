@@ -1,0 +1,47 @@
+volumes:
+  postgres-data:
+    external: true
+  prometheus-data:
+    external: true
+    
+services:
+
+  ### Definicion de aplicacion web
+  app_php_apache:
+    image: mariorp01/app-php-apache
+    container_name: app_php_apache
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "8081:80"
+    depends_on:
+    - postgres
+
+  ### Definicion de base de datos
+  postgres:
+    image: postgres:15.2
+    container_name: postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - 'postgres-data:/var/lib/postgresql/data'
+
+  prometheus:
+    image: 'prom/prometheus:v2.43.0'
+    container_name: prometheus
+    restart: always
+    ports:
+      - '9090:9090'
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    volumes:
+      - './prometheus.yml:/etc/prometheus/prometheus.yml'
+      - 'prometheus-data:/prometheus'
